@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="UpturnStudio\Ai\Api\AiManagerInterface" type="UpturnStudio\Ai\Model\AiManager"/>
+    <preference for="UpturnStudio\Ai\Api\AgentRunnerInterface" type="UpturnStudio\Ai\Model\Agent\AgentRunner"/>
+    <preference for="UpturnStudio\Ai\Api\ConfigInterface" type="UpturnStudio\Ai\Model\Config"/>
+
+    <!-- Drivers: other modules add their own by extending this array in their di.xml. -->
+    <type name="UpturnStudio\Ai\Model\AiManager">
+        <arguments>
+            <argument name="drivers" xsi:type="array">
+                <item name="anthropic" xsi:type="object">UpturnStudio\Ai\Model\Provider\Driver\AnthropicDriver</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!--
+        Extra named providers go on the "providers" argument of UpturnStudio\Ai\Model\Config, e.g.:
+        <item name="local" xsi:type="array">
+            <item name="driver" xsi:type="string">openai-compatible</item>
+            <item name="url" xsi:type="string">http://localhost:1234/v1</item>
+            <item name="key_config_path" xsi:type="string">my_module/ai/local_api_key</item>
+        </item>
+    -->
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="upturnstudio_ai_prompt" xsi:type="object">UpturnStudio\Ai\Console\Command\Prompt</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="upturnstudio_ai/anthropic/api_key" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

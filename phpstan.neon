@@ -1,0 +1,12 @@
+includes:
+    - ../../../../dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon
+parameters:
+    level: 6
+    paths:
+        - .
+    excludePaths:
+        - Test/*
+    treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        # Array shapes are documented in prose where they matter; Magento's own interfaces use bare arrays.
+        - '#no value type specified in iterable type (array|iterable)#'

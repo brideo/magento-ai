@@ -1,0 +1,30 @@
+{
+    "name": "upturnstudio/module-ai",
+    "description": "An AI SDK for Magento 2 and Mage-OS modelled on the Laravel AI SDK: agents, tools, structured output, provider failover and testing fakes. Anthropic driver included; more providers planned.",
+    "type": "magento2-module",
+    "keywords": ["magento2", "mage-os", "ai", "llm", "agents", "anthropic", "claude"],
+    "homepage": "https://github.com/brideo/module-ai",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brideo",
+            "homepage": "https://brideo.co.uk"
+        }
+    ],
+    "require": {
+        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+        "guzzlehttp/guzzle": "^7.5",
+        "magento/framework": "*",
+        "magento/module-config": "*",
+        "magento/module-store": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "UpturnStudio\\Ai\\": ""
+        }
+    },
+    "version": "1.0.0"
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="upturnstudio" translate="label" sortOrder="400">
+            <label>UpturnStudio</label>
+        </tab>
+        <section id="upturnstudio_ai" translate="label" type="text" sortOrder="40"
+                 showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>AI</label>
+            <tab>upturnstudio</tab>
+            <resource>UpturnStudio_Ai::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="default_text_provider" translate="label comment" type="text" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Default Text Provider</label>
+                    <comment>The provider agents use when none is given, e.g. anthropic.</comment>
+                </field>
+            </group>
+            <group id="anthropic" translate="label" type="text" sortOrder="20"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Anthropic</label>
+                <field id="api_key" translate="label" type="obscure" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="url" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Base URL</label>
+                    <comment>Leave empty for the default. Set it to route requests through a proxy.</comment>
+                </field>
+                <field id="text_model" translate="label" type="text" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Default Text Model</label>
+                </field>
+                <field id="cheapest_text_model" translate="label comment" type="text" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Cheapest Text Model</label>
+                    <comment>Used by agents marked #[UseCheapestModel].</comment>
+                </field>
+                <field id="smartest_text_model" translate="label comment" type="text" sortOrder="50"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Smartest Text Model</label>
+                    <comment>Used by agents marked #[UseSmartestModel].</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
