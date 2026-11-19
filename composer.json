@@ -3,7 +3,7 @@
     "description": "An AI SDK for Magento 2 and Mage-OS modelled on the Laravel AI SDK: agents, tools, structured output, provider failover and testing fakes. Anthropic driver included; more providers planned.",
     "type": "magento2-module",
     "keywords": ["magento2", "mage-os", "ai", "llm", "agents", "anthropic", "claude"],
-    "homepage": "https://github.com/brideo/module-ai",
+    "homepage": "https://github.com/brideo/magento-ai",
     "license": "MIT",
     "authors": [
         {
