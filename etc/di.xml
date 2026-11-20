@@ -5,11 +5,50 @@
     <preference for="UpturnStudio\Ai\Api\AgentRunnerInterface" type="UpturnStudio\Ai\Model\Agent\AgentRunner"/>
     <preference for="UpturnStudio\Ai\Api\ConfigInterface" type="UpturnStudio\Ai\Model\Config"/>
 
+    <virtualType name="UpturnStudio\Ai\Model\Provider\Driver\Anthropic"
+                 type="UpturnStudio\Ai\Model\Provider\Driver\ProviderDriver">
+        <arguments>
+            <argument name="providerClass" xsi:type="string">UpturnStudio\Ai\Model\Provider\AnthropicProvider</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="UpturnStudio\Ai\Model\Provider\Driver\OpenAi"
+                 type="UpturnStudio\Ai\Model\Provider\Driver\ProviderDriver">
+        <arguments>
+            <argument name="providerClass" xsi:type="string">UpturnStudio\Ai\Model\Provider\OpenAiProvider</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="UpturnStudio\Ai\Model\Provider\Driver\Gemini"
+                 type="UpturnStudio\Ai\Model\Provider\Driver\ProviderDriver">
+        <arguments>
+            <argument name="providerClass" xsi:type="string">UpturnStudio\Ai\Model\Provider\GeminiProvider</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="UpturnStudio\Ai\Model\Provider\Driver\OpenAiCompatible"
+                 type="UpturnStudio\Ai\Model\Provider\Driver\ProviderDriver">
+        <arguments>
+            <argument name="providerClass" xsi:type="string">
+                UpturnStudio\Ai\Model\Provider\OpenAiCompatibleProvider
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="UpturnStudio\Ai\Model\Provider\Driver\Ollama"
+                 type="UpturnStudio\Ai\Model\Provider\Driver\ProviderDriver">
+        <arguments>
+            <argument name="providerClass" xsi:type="string">UpturnStudio\Ai\Model\Provider\OllamaProvider</argument>
+        </arguments>
+    </virtualType>
+
     <!-- Drivers: other modules add their own by extending this array in their di.xml. -->
     <type name="UpturnStudio\Ai\Model\AiManager">
         <arguments>
             <argument name="drivers" xsi:type="array">
-                <item name="anthropic" xsi:type="object">UpturnStudio\Ai\Model\Provider\Driver\AnthropicDriver</item>
+                <item name="anthropic" xsi:type="object">UpturnStudio\Ai\Model\Provider\Driver\Anthropic</item>
+                <item name="openai" xsi:type="object">UpturnStudio\Ai\Model\Provider\Driver\OpenAi</item>
+                <item name="gemini" xsi:type="object">UpturnStudio\Ai\Model\Provider\Driver\Gemini</item>
+                <item name="openai-compatible" xsi:type="object">
+                    UpturnStudio\Ai\Model\Provider\Driver\OpenAiCompatible
+                </item>
+                <item name="ollama" xsi:type="object">UpturnStudio\Ai\Model\Provider\Driver\Ollama</item>
             </argument>
         </arguments>
     </type>
@@ -35,6 +74,10 @@
         <arguments>
             <argument name="sensitive" xsi:type="array">
                 <item name="upturnstudio_ai/anthropic/api_key" xsi:type="string">1</item>
+                <item name="upturnstudio_ai/openai/api_key" xsi:type="string">1</item>
+                <item name="upturnstudio_ai/gemini/api_key" xsi:type="string">1</item>
+                <item name="upturnstudio_ai/ollama/api_key" xsi:type="string">1</item>
+                <item name="upturnstudio_ai/openai_compatible/api_key" xsi:type="string">1</item>
             </argument>
         </arguments>
     </type>

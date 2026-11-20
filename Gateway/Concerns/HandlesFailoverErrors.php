@@ -67,7 +67,7 @@ trait HandlesFailoverErrors
         $status = $e->response->status();
         $detail = $this->errorMessage($e);
 
-        if ($status === 401) {
+        if ($this->isInvalidApiKey($e)) {
             return new InvalidApiKeyException(
                 sprintf('AI provider [%s] rejected the API key: %s', $providerName, $detail),
                 $status,
@@ -100,6 +100,16 @@ trait HandlesFailoverErrors
         }
 
         return $e;
+    }
+
+    /**
+     * Whether the failure means the API key was rejected. Gateways override this for providers that do not use 401.
+     *
+     * @param RequestException $e
+     */
+    protected function isInvalidApiKey(RequestException $e): bool
+    {
+        return $e->response->status() === 401;
     }
 
     /**

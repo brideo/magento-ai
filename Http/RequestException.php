@@ -21,11 +21,13 @@ class RequestException extends AiException
         public readonly Response $response,
         ?string $message = null
     ) {
+        $detail = $response->json('error.message') ?? $response->json('0.error.message');
+
         parent::__construct(
             $message ?? sprintf(
                 'HTTP request returned status code %d: %s',
                 $response->status(),
-                mb_substr($response->body(), 0, 500)
+                is_string($detail) && $detail !== '' ? $detail : mb_substr($response->body(), 0, 500)
             ),
             $response->status()
         );

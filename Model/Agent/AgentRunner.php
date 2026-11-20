@@ -106,7 +106,8 @@ class AgentRunner implements AgentRunnerInterface
      * The providers to try, in order, each with the model to use or null for the provider's default.
      *
      * Resolution order: the prompt() argument, the agent's provider() method, its #[Provider] attribute, then
-     * the configured default. An explicit model applies only when a single provider is in play.
+     * the configured default. An explicit model applies only when a single provider is in play; in a failover
+     * list each provider uses its own default unless the list is keyed by provider with a model as the value.
      *
      * @param AgentInterface $agent
      * @param Lab|ProviderInterface|array|string|null $provider
@@ -134,6 +135,11 @@ class AgentRunner implements AgentRunnerInterface
             } else {
                 $list[$key] = $value === null ? null : (string) $value;
             }
+        }
+
+        // A one-provider list is not a failover list, so an explicit model still applies to it.
+        if ($model !== null && count($list) === 1 && current($list) === null) {
+            $list[(string) key($list)] = $model;
         }
 
         return $list;

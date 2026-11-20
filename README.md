@@ -19,7 +19,16 @@ echo $response;
 
 ## Status
 
-This is a work in progress. Anthropic is the only driver so far; OpenAI, Gemini and OpenAI-compatible/Ollama are planned next. Streaming, conversation memory, tool approval, queueing, files, images and audio are not built yet.
+This is a work in progress. Text generation works on four drivers:
+
+| Driver | API | Live-tested |
+|---|---|---|
+| `anthropic` | Messages API | Yes |
+| `openai` | Responses API | No — mocked HTTP only |
+| `gemini` | Interactions API | No — mocked HTTP only |
+| `openai-compatible`, `ollama` | Chat completions | No — mocked HTTP only |
+
+Streaming, attachments, conversation memory, tool approval, queueing, files, images and audio are not built yet.
 
 [`docs/PROGRESS.md`](docs/PROGRESS.md) tracks every section of the Laravel docs against this module, with what is implemented, unit-tested and verified against a live API.
 
@@ -40,14 +49,26 @@ php bin/magento setup:upgrade
 
 Go to **Stores > Configuration > UpturnStudio > AI**.
 
-| Setting | Config path | Default |
+Each provider has its own group with the same fields. `<provider>` is `anthropic`, `openai`, `gemini`, `ollama` or `openai_compatible`.
+
+| Setting | Config path |
+|---|---|
+| Default text provider | `upturnstudio_ai/general/default_text_provider` (default `anthropic`) |
+| API key (encrypted) | `upturnstudio_ai/<provider>/api_key` |
+| Base URL | `upturnstudio_ai/<provider>/url` |
+| Default text model | `upturnstudio_ai/<provider>/text_model` |
+| Cheapest text model | `upturnstudio_ai/<provider>/cheapest_text_model` |
+| Smartest text model | `upturnstudio_ai/<provider>/smartest_text_model` |
+
+| Provider | Default / cheapest / smartest model | Notes |
 |---|---|---|
-| Default text provider | `upturnstudio_ai/general/default_text_provider` | `anthropic` |
-| Anthropic API key (encrypted) | `upturnstudio_ai/anthropic/api_key` | — |
-| Anthropic base URL | `upturnstudio_ai/anthropic/url` | `https://api.anthropic.com/v1` |
-| Default text model | `upturnstudio_ai/anthropic/text_model` | `claude-opus-5-5` |
-| Cheapest text model | `upturnstudio_ai/anthropic/cheapest_text_model` | `claude-haiku-5-5` |
-| Smartest text model | `upturnstudio_ai/anthropic/smartest_text_model` | `claude-opus-5-5` |
+| Anthropic | `claude-opus-5-5` / `claude-haiku-5-5` / `claude-opus-5-5` | |
+| OpenAI | `gpt-6.1-sol` / `gpt-6-luna` / `gpt-6-astra` | Set `store` to `false` on a provider to stop OpenAI retaining responses |
+| Gemini | `gemini-3.8-flash` / `gemini-3.1-flash-lite` / `gemini-3.8-flash` | |
+| Ollama | `qwen3.5:4b` | Base URL defaults to `http://localhost:11434/v1`; key optional |
+| OpenAI-compatible | none — set one | Base URL required; key optional |
+
+The OpenAI, Gemini and Ollama defaults follow the Laravel AI SDK; change them to whatever your account or server offers.
 
 Set the base URL to route requests through a proxy or gateway.
 
@@ -174,7 +195,7 @@ $response = agent(
 
 `Provider`, `Model`, `MaxSteps`, `MaxTokens`, `Timeout`, `UseCheapestModel`, `UseSmartestModel`, `CacheInstructions`, `CacheToolDefinitions`, `RepairToolCalls`, `Strict`, `Temperature`, `TopP`, all under `UpturnStudio\Ai\Attributes`. A method of the same meaning on the agent (`provider()`, `model()`, `maxSteps()`, …) takes priority.
 
-Anthropic ignores `Temperature` and `TopP`: its current API version rejects sampling parameters.
+Anthropic ignores `Temperature` and `TopP`: its current API version rejects sampling parameters. The other drivers send them.
 
 ## Tools
 
@@ -240,9 +261,11 @@ Pass an array of providers. The next one is tried when a provider is rate limite
 ```php
 (new SalesCoach)->prompt('...', provider: ['anthropic', 'claude-eu']);
 
-// Choose the model per provider:
-(new SalesCoach)->prompt('...', provider: ['anthropic' => 'claude-opus-5-5', 'claude-eu' => 'claude-sonnet-5-5']);
+// Across vendors, choosing the model per provider:
+(new SalesCoach)->prompt('...', provider: ['anthropic' => 'claude-opus-5-5', 'openai' => 'gpt-6.1-sol']);
 ```
+
+In a failover list each provider uses its own default model; a `model:` argument applies only when one provider is given.
 
 ## Events
 
@@ -313,7 +336,7 @@ Implement `Api\Provider\DriverInterface`, returning a provider that implements `
 </type>
 ```
 
-A gateway makes one model round-trip; the tool loop lives in `Gateway\TextGenerationLoop`. `Gateway\Anthropic\AnthropicGateway` is the reference implementation.
+A gateway makes one model round-trip; the tool loop lives in `Gateway\TextGenerationLoop`. `Gateway\OpenAiCompatible\OpenAiCompatibleGateway` is the shortest example to copy from.
 
 ## Differences from Laravel
 

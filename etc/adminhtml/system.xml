@@ -16,7 +16,7 @@
                 <field id="default_text_provider" translate="label comment" type="text" sortOrder="10"
                        showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Default Text Provider</label>
-                    <comment>The provider agents use when none is given, e.g. anthropic.</comment>
+                    <comment>anthropic, openai, gemini, ollama, openai-compatible or a custom name.</comment>
                 </field>
             </group>
             <group id="anthropic" translate="label" type="text" sortOrder="20"
@@ -31,6 +31,120 @@
                        showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Base URL</label>
                     <comment>Leave empty for the default. Set it to route requests through a proxy.</comment>
+                </field>
+                <field id="text_model" translate="label" type="text" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Default Text Model</label>
+                </field>
+                <field id="cheapest_text_model" translate="label comment" type="text" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Cheapest Text Model</label>
+                    <comment>Used by agents marked #[UseCheapestModel].</comment>
+                </field>
+                <field id="smartest_text_model" translate="label comment" type="text" sortOrder="50"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Smartest Text Model</label>
+                    <comment>Used by agents marked #[UseSmartestModel].</comment>
+                </field>
+            </group>
+            <group id="openai" translate="label" type="text" sortOrder="30"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>OpenAI</label>
+                <field id="api_key" translate="label" type="obscure" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="url" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Base URL</label>
+                    <comment>Leave empty for the default. Set it to route requests through a proxy.</comment>
+                </field>
+                <field id="text_model" translate="label" type="text" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Default Text Model</label>
+                </field>
+                <field id="cheapest_text_model" translate="label comment" type="text" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Cheapest Text Model</label>
+                    <comment>Used by agents marked #[UseCheapestModel].</comment>
+                </field>
+                <field id="smartest_text_model" translate="label comment" type="text" sortOrder="50"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Smartest Text Model</label>
+                    <comment>Used by agents marked #[UseSmartestModel].</comment>
+                </field>
+            </group>
+            <group id="gemini" translate="label" type="text" sortOrder="40"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Google Gemini</label>
+                <field id="api_key" translate="label" type="obscure" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="url" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Base URL</label>
+                    <comment>Leave empty for the default. Set it to route requests through a proxy.</comment>
+                </field>
+                <field id="text_model" translate="label" type="text" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Default Text Model</label>
+                </field>
+                <field id="cheapest_text_model" translate="label comment" type="text" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Cheapest Text Model</label>
+                    <comment>Used by agents marked #[UseCheapestModel].</comment>
+                </field>
+                <field id="smartest_text_model" translate="label comment" type="text" sortOrder="50"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Smartest Text Model</label>
+                    <comment>Used by agents marked #[UseSmartestModel].</comment>
+                </field>
+            </group>
+            <group id="ollama" translate="label" type="text" sortOrder="50"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Ollama</label>
+                <field id="api_key" translate="label comment" type="obscure" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Key</label>
+                    <comment>Only needed when the server requires one.</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="url" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Base URL</label>
+                    <comment>The OpenAI-compatible endpoint of the Ollama server.</comment>
+                </field>
+                <field id="text_model" translate="label" type="text" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Default Text Model</label>
+                </field>
+                <field id="cheapest_text_model" translate="label comment" type="text" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Cheapest Text Model</label>
+                    <comment>Used by agents marked #[UseCheapestModel].</comment>
+                </field>
+                <field id="smartest_text_model" translate="label comment" type="text" sortOrder="50"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Smartest Text Model</label>
+                    <comment>Used by agents marked #[UseSmartestModel].</comment>
+                </field>
+            </group>
+            <group id="openai_compatible" translate="label" type="text" sortOrder="60"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>OpenAI-Compatible</label>
+                <field id="api_key" translate="label comment" type="obscure" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Key</label>
+                    <comment>Sent as a bearer token. Optional.</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="url" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Base URL</label>
+                    <comment>Required, e.g. http://localhost:1234/v1 for LM Studio.</comment>
                 </field>
                 <field id="text_model" translate="label" type="text" sortOrder="30"
                        showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">

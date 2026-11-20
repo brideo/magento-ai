@@ -12,7 +12,12 @@ use UpturnStudio\Ai\Events\NullEventManager;
 use UpturnStudio\Ai\Http\Client;
 use UpturnStudio\Ai\Model\Agent\AgentRunner;
 use UpturnStudio\Ai\Model\Config\ArrayConfig;
-use UpturnStudio\Ai\Model\Provider\Driver\AnthropicDriver;
+use UpturnStudio\Ai\Model\Provider\AnthropicProvider;
+use UpturnStudio\Ai\Model\Provider\Driver\ProviderDriver;
+use UpturnStudio\Ai\Model\Provider\GeminiProvider;
+use UpturnStudio\Ai\Model\Provider\OllamaProvider;
+use UpturnStudio\Ai\Model\Provider\OpenAiCompatibleProvider;
+use UpturnStudio\Ai\Model\Provider\OpenAiProvider;
 
 /**
  * Wires the SDK by hand, without Magento's ObjectManager. Unit tests and scripts use it; inside Magento the
@@ -36,9 +41,18 @@ class StandaloneFactory
         $http ??= new Client();
         $events ??= new Dispatcher(new NullEventManager());
 
-        $manager = new AiManager($config ?? new ArrayConfig(), $events, [
-            'anthropic' => new AnthropicDriver($http, $events),
-        ]);
+        $drivers = [
+            'anthropic' => AnthropicProvider::class,
+            'openai' => OpenAiProvider::class,
+            'gemini' => GeminiProvider::class,
+            'openai-compatible' => OpenAiCompatibleProvider::class,
+            'ollama' => OllamaProvider::class,
+        ];
+
+        $manager = new AiManager($config ?? new ArrayConfig(), $events, array_map(
+            static fn (string $providerClass) => new ProviderDriver($http, $events, $providerClass),
+            $drivers
+        ));
 
         return [$manager, new AgentRunner($manager, $events)];
     }

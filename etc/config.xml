@@ -12,6 +12,26 @@
                 <cheapest_text_model>claude-haiku-5-5</cheapest_text_model>
                 <smartest_text_model>claude-opus-5-5</smartest_text_model>
             </anthropic>
+            <openai>
+                <api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <text_model>gpt-6.1-sol</text_model>
+                <cheapest_text_model>gpt-6-luna</cheapest_text_model>
+                <smartest_text_model>gpt-6-astra</smartest_text_model>
+            </openai>
+            <gemini>
+                <api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <text_model>gemini-3.8-flash</text_model>
+                <cheapest_text_model>gemini-3.1-flash-lite</cheapest_text_model>
+                <smartest_text_model>gemini-3.8-flash</smartest_text_model>
+            </gemini>
+            <ollama>
+                <api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <url>http://localhost:11434/v1</url>
+                <text_model>qwen3.5:4b</text_model>
+            </ollama>
+            <openai_compatible>
+                <api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+            </openai_compatible>
         </upturnstudio_ai>
     </default>
 </config>
